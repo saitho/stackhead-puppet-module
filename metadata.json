@@ -1,0 +1,17 @@
+{
+  "name": "stackhead-stackhead",
+  "summary": "Wrapper module",
+  "version": "0.1.0",
+  "dependencies": [
+    {
+      "name": "puppet-nginx",
+      "version_requirement": ">= 1.1.0"
+    }
+  ],
+  "license": "GPL-3.0-or-later",
+  "author": "saitho",
+  "source": "https://github.com/getstackhead/puppet-module",
+  "project_page": "https://github.com/getstackhead/puppet-module",
+  "issues_url": "https://github.com/getstackhead/puppet-module/issues",
+  "data_provider": null
+}
