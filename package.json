@@ -1,4 +1,5 @@
 {
+  "private": true,
   "scripts": {
     "semantic-release": "semantic-release",
     "commit": "git-cz"
