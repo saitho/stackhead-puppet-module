@@ -9,7 +9,7 @@ define stackhead::nginx::ssl_proxy (
 
   nginx::resource::server { "${name}":
     ensure          => present,
-    server_name     => "${server_name}",
+    server_name     => ["${server_name}"],
     ssl             => true,
     ssl_cert        => "${ssl_cert}",
     ssl_key         => "${ssl_key}",
