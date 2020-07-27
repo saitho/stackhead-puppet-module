@@ -8,21 +8,18 @@ define stackhead::nginx::ssl_proxy (
   include nginx
 
   # ensure ssl certificate exist to start up nginx
-  # if no certificate files are found, use fake certificates
+  # if no certificate files are found, symlink fake certificates
   $chain_path = "${stackhead::project_certificate_dir}/fullchain.pem"
   $privkey_path = "${stackhead::project_certificate_dir}/privkey.pem"
 
-  $chain_exists = find_file($chain_path)
-  if $use_ssl and !$chain_exists {
+  if $use_ssl {
     exec { "fake_chain-${stackhead_project_name}":
       command => "ln -s ${stackhead::certificate_dir}/fullchain_snakeoil.pem ${chain_path}",
-      unless  => "test -e ${chain_path}",
       creates => $chain_path,
       path    => '/bin',
     }
     exec { "fake_key-${stackhead_project_name}":
       command => "ln -s ${stackhead::certificate_dir}/privkey_snakeoil.pem ${privkey_path}",
-      unless  => "test -e ${privkey_path}",
       creates => $privkey_path,
       path    => '/bin',
     }
