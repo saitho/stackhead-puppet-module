@@ -1,3 +1,10 @@
+## [1.2.10](https://github.com/getstackhead/puppet-module/compare/v1.2.9...v1.2.10) (2020-07-27)
+
+
+### Bug Fixes
+
+* drop $iteration_counter for $name ([0da52b9](https://github.com/getstackhead/puppet-module/commit/0da52b960cdf123c21332ef894ac03ce93af2e8e))
+
 ## [1.2.9](https://github.com/getstackhead/puppet-module/compare/v1.2.8...v1.2.9) (2020-07-27)
 
 
