@@ -1,4 +1,5 @@
 define stackhead::nginx::ssl_proxy (
+  String $project_name,
   Integer $proxy_port,
   Integer $listen_port              = 80,
   String  $server_name              = $name,
@@ -45,7 +46,7 @@ define stackhead::nginx::ssl_proxy (
     ensure         => $ensure_ssl,
     server         => $name,
     location       => '/.well-known/acme-challenge',
-    location_alias => "${stackhead::acme_dir}/${server_name}"
+    location_alias => "${stackhead::acme_dir}/${project_name}"
   }
 
   #     location /.well-known/acme-challenge {
