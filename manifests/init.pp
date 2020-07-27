@@ -5,6 +5,10 @@
 #   class { 'stackhead': }
 #
 class stackhead (
+  String $certificate_dir,
+  String $certificate_email,
+  String $acme_dir,
+  String $project_certificate_dir,
 ) {
 
 }

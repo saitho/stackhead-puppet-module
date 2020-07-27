@@ -1,6 +1,4 @@
 define stackhead::nginx::ssl_proxy (
-  $ssl_cert,
-  $ssl_key,
   $proxy_port,
   $listen_port = 80,
   $server_name = $name,
@@ -27,10 +25,10 @@ define stackhead::nginx::ssl_proxy (
   # Create Nginx server configuration
   nginx::resource::server { $name:
     ensure          => present,
-    server_name     => ["${server_name}"],
+    server_name     => [$server_name],
     ssl             => true,
-    ssl_cert        => "${ssl_cert}",
-    ssl_key         => "${ssl_key}",
+    ssl_cert        => $chain_path,
+    ssl_key         => $privkey_path,
     ssl_redirect    => true,
     proxy           => "http://127.0.0.1:${proxy_port}",
   }
