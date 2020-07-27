@@ -38,12 +38,8 @@ define stackhead::nginx::ssl_proxy (
   }
 
   # Redirect for acme
-  $ensure_ssl = 'present'
-  if $use_ssl {
-    $ensure_ssl = 'absent'
-  }
   nginx::resource::location { "${name}_acme":
-    ensure         => $ensure_ssl,
+    ensure         => $use_ssl ? { false => 'absent', default => 'present' },
     server         => $name,
     location       => '/.well-known/acme-challenge',
     location_alias => "${stackhead::acme_dir}/${project_name}"
