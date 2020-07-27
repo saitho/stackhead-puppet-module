@@ -13,22 +13,35 @@ define stackhead::project::setup_container (
     renew_cron_ensure => 'present',
   }
 
+  $domain_names = $domains.map |$item| { $item[domain] }
+
   # Setup Nginx configurations
   $domains.each |Hash $domain| {
-    if (!$domain['expose']) {
-      next
-    }
-    $domain['expose'].each |Hash $expose| {
-      stackhead::nginx::ssl_proxy { "${domain['domain']}-${expose['external_port']}":
-        server_name => $domain['domain'],
-        listen_port => $expose['external_port'],
-        proxy_port => $expose['internal_port'],
+    $domain[expose].each |Hash $expose| {
+      stackhead::nginx::ssl_proxy { "${domain[domain]}-${expose[external_port]}":
+        server_name => $domain[domain],
+        listen_port => $expose[external_port],
+        proxy_port  => $expose[internal_port],
       }
     }
   }
 
+  # Create ACME location in Nginx configuration
+  #     location /.well-known/acme-challenge {
+  #         alias {{ stackhead__acme_folder }}/{{ nginx_servername }};
+  #
+  #         location ~ /.well-known/acme-challenge/(.*) {
+  #             default_type text/plain;
+  #         }
+  #     }
+  nginx::resource::location { "${name}_acme":
+    ensure   => present,
+    server   => $domain_names,
+    location => '/.well-known/acme-challenge',
+    alias    => "${stackhead::acme_dir}/${server_name}"
+  }
+
   # Generate real SSL certificates
-  $domain_names = $domains.map |$item| { $item['domain'] }
   $acme_dirs = $domain_names.map |String $domain | {
     "${stackhead::acme_dir}/${domain}"
   }
