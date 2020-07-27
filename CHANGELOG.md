@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/getstackhead/puppet-module/compare/v1.5.0...v1.5.1) (2020-07-27)
+
+
+### Bug Fixes
+
+* **nginx:** syntax error ([a1469de](https://github.com/getstackhead/puppet-module/commit/a1469de2495bd55649352e7da5bd6bcc4bcde85e))
+
 # [1.5.0](https://github.com/getstackhead/puppet-module/compare/v1.4.1...v1.5.0) (2020-07-27)
 
 
