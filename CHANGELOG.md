@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/getstackhead/puppet-module/compare/v1.3.1...v1.4.0) (2020-07-27)
+
+
+### Bug Fixes
+
+* fix acme dirs ([c46e158](https://github.com/getstackhead/puppet-module/commit/c46e158a7fc73b3bedf5a213fdb54e45bf9b37d8))
+
+
+### Features
+
+* **nginx:** additional ssl settings ([d730b89](https://github.com/getstackhead/puppet-module/commit/d730b89bd06251a8d41340eef3dcb795d2fac234))
+
 ## [1.3.1](https://github.com/getstackhead/puppet-module/compare/v1.3.0...v1.3.1) (2020-07-27)
 
 
