@@ -27,11 +27,13 @@ jobs:
         run: npm i -g pnpm && pnpm i -P
       - run: pnpm install
       - name: Semantic Release Action
+        id: semantic-release
         uses: saitho/semantic-release-action-pnpm@master
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Build and publish module
         uses: barnumbirr/action-forge-publish@v2.3.0
+        if: steps.semantic-release.outputs.new_release_published == 1
         env:
           FORGE_API_KEY: ${{ secrets.FORGE_API_KEY }}
           REPOSITORY_URL: https://forgeapi.puppet.com/v3/releases
