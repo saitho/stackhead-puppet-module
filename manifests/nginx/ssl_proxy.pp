@@ -2,6 +2,7 @@ define stackhead::nginx::ssl_proxy (
   $proxy_port,
   $listen_port = 80,
   $server_name = $name,
+  $use_ssl     = true,
 ) {
   include nginx
 
@@ -11,7 +12,7 @@ define stackhead::nginx::ssl_proxy (
   $privkey_path = "${stackhead::project_certificate_dir}/privkey.pem"
 
   $chain_exists = find_file($chain_path)
-  if $chain_exists {
+  if $use_ssl and !$chain_exists {
     exec { 'fake_chain':
       command => "ln -s ${stackhead::certificate_dir}/fullchain_snakeoil.pem ${chain_path}",
       unless  => "test -e ${chain_path}",
@@ -30,21 +31,22 @@ define stackhead::nginx::ssl_proxy (
   nginx::resource::server { $name:
     ensure          => present,
     server_name     => [$server_name],
-    ssl             => true,
+    ssl             => $use_ssl,
     ssl_cert        => $chain_path,
     ssl_key         => $privkey_path,
-    ssl_redirect    => true,
+    ssl_redirect    => $use_ssl,
     proxy           => "http://127.0.0.1:${proxy_port}",
   }
 
   # Redirect for acme
-  nginx::resource::location { "${name}_acme":
-    ensure         => present,
-    server         => $name,
-    location       => '/.well-known/acme-challenge',
-    location_alias => "${stackhead::acme_dir}/${server_name}"
+  if $use_ssl {
+    nginx::resource::location { "${name}_acme":
+      ensure         => present,
+      server         => $name,
+      location       => '/.well-known/acme-challenge',
+      location_alias => "${stackhead::acme_dir}/${server_name}"
+    }
   }
-
 
   #     location /.well-known/acme-challenge {
   #         alias {{ stackhead__acme_folder }}/{{ nginx_servername }};
