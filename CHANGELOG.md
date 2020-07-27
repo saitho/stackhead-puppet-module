@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/getstackhead/puppet-module/compare/v1.4.0...v1.4.1) (2020-07-27)
+
+
+### Bug Fixes
+
+* **nginx:** include additional ssl file if it exists ([c4f78df](https://github.com/getstackhead/puppet-module/commit/c4f78dff534944454bd02cbcede287f5e7da9f6b))
+* **nginx:** remove additional include as settings already present ([6584464](https://github.com/getstackhead/puppet-module/commit/65844645d401ff5415de762ea46a10888974f0a8))
+
 # [1.4.0](https://github.com/getstackhead/puppet-module/compare/v1.3.1...v1.4.0) (2020-07-27)
 
 
