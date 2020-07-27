@@ -35,14 +35,11 @@ define stackhead::project::setup_container (
     }
 
     $domain_names = $domains.map |$item| { $item[domain] }
-    $acme_dirs = $domain_names.map |String $domain | {
-      "${stackhead::acme_dir}/${domain}"
-    }
 
     letsencrypt::certonly { "${name}":
       ensure        => $ensure,
       domains       => $domain_names,
-      webroot_paths => $acme_dirs,
+      webroot_paths => ["${stackhead::acme_dir}/${name}"],
       plugin        => 'webroot',
     }
   }
