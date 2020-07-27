@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/getstackhead/puppet-module/compare/v1.2.6...v1.2.7) (2020-07-27)
+
+
+### Bug Fixes
+
+* set counter on fake cert execs to avoid duplicate error ([de9bb9c](https://github.com/getstackhead/puppet-module/commit/de9bb9c1ee2686893acb997594d366cb87ce2ce8))
+
 ## [1.2.6](https://github.com/getstackhead/puppet-module/compare/v1.2.5...v1.2.6) (2020-07-27)
 
 
@@ -88,6 +95,3 @@
 
 * add base structure ([c9cf373](https://github.com/getstackhead/puppet-module/commit/c9cf3733044dd4dfa29e1476d8054429ca3e3e6e))
 * add nginx proxy class ([9f78aba](https://github.com/getstackhead/puppet-module/commit/9f78aba134c6d57484475a02632816f4b31ca8ce))
-
-
-
