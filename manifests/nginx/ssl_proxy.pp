@@ -28,21 +28,25 @@ define stackhead::nginx::ssl_proxy (
 
   # Create Nginx server configuration
   nginx::resource::server { $name:
-    ensure          => $ensure,
-    server_name     => [$server_name],
-    ssl             => $use_ssl,
-    ssl_cert        => $chain_path,
-    ssl_key         => $privkey_path,
-    ssl_redirect    => $use_ssl,
-    proxy           => "http://127.0.0.1:${proxy_port}",
+    ensure               => $ensure,
+    server_name          => [$server_name],
+    ssl                  => $use_ssl,
+    ssl_cert             => $chain_path,
+    ssl_key              => $privkey_path,
+    ssl_redirect         => $use_ssl,
+    location_cfg_prepend => { client_max_body_size => '10G' },
+    include              => $use_ssl ? { false => [], default => ['/etc/nginx/h5bp/ssl/policy_modern.conf'] },
+    proxy                => "http://127.0.0.1:${proxy_port}",
   }
 
   # Redirect for acme
   nginx::resource::location { "${name}_acme":
-    ensure         => $use_ssl ? { false => 'absent', default => 'present' },
-    server         => $name,
-    location       => '/.well-known/acme-challenge',
-    location_alias => "${stackhead::acme_dir}/${project_name}"
+    ensure              => $use_ssl ? { false => 'absent', default => 'present' },
+    server              => $name,
+    index_files         => [],
+    location            => '/.well-known/acme-challenge',
+    location_alias      => "${stackhead::acme_dir}/${project_name}",
+    location_cfg_append => { 'default_type' => 'text/plain' }
   }
 
   #     location /.well-known/acme-challenge {
