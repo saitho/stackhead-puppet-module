@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/getstackhead/puppet-module/compare/v1.2.10...v1.3.0) (2020-07-27)
+
+
+### Features
+
+* add project_name setting ([f7b6c60](https://github.com/getstackhead/puppet-module/commit/f7b6c60ebdb6e3c497bb5056c7691c6e77b1324f))
+* introduce ensure setting ([a27cecb](https://github.com/getstackhead/puppet-module/commit/a27cecb78093f25b4a66d8ee67c3d0877def98a8))
+
 ## [1.2.10](https://github.com/getstackhead/puppet-module/compare/v1.2.9...v1.2.10) (2020-07-27)
 
 
