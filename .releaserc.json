@@ -8,7 +8,7 @@
     ],
     [
       "@semantic-release/git",
-      {"assets": ["metadata.json"]}
+      {"assets": ["metadata.json", "CHANGELOG.md"]}
     ],
     "@semantic-release/github"
   ],
