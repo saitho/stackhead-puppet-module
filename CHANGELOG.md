@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/getstackhead/puppet-module/compare/v1.3.0...v1.3.1) (2020-07-27)
+
+
+### Bug Fixes
+
+* variable override ([8eb6d46](https://github.com/getstackhead/puppet-module/commit/8eb6d46b36e0a4c62862457d164aaa2cb947a92f))
+
 # [1.3.0](https://github.com/getstackhead/puppet-module/compare/v1.2.10...v1.3.0) (2020-07-27)
 
 
