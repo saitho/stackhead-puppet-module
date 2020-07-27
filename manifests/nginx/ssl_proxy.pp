@@ -39,10 +39,10 @@ define stackhead::nginx::ssl_proxy (
 
   # Redirect for acme
   nginx::resource::location { "${name}_acme":
-    ensure   => present,
-    server   => $name,
-    location => '/.well-known/acme-challenge',
-    alias    => "${stackhead::acme_dir}/${server_name}"
+    ensure         => present,
+    server         => $name,
+    location       => '/.well-known/acme-challenge',
+    location_alias => "${stackhead::acme_dir}/${server_name}"
   }
 
 
