@@ -1,3 +1,10 @@
+## [1.2.8](https://github.com/getstackhead/puppet-module/compare/v1.2.7...v1.2.8) (2020-07-27)
+
+
+### Bug Fixes
+
+* fix operators ([e2c5813](https://github.com/getstackhead/puppet-module/commit/e2c5813f65d56220a17cedae9f79d277a2a05374))
+
 ## [1.2.7](https://github.com/getstackhead/puppet-module/compare/v1.2.6...v1.2.7) (2020-07-27)
 
 
