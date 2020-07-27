@@ -1,8 +1,9 @@
 define stackhead::nginx::ssl_proxy (
-  $proxy_port,
-  $listen_port = 80,
-  $server_name = $name,
-  $use_ssl     = true,
+  String $stackhead_project_name,
+  Integer $proxy_port,
+  Integer $listen_port = 80,
+  String $server_name  = $name,
+  Boolean $use_ssl     = true,
 ) {
   include nginx
 
@@ -13,13 +14,13 @@ define stackhead::nginx::ssl_proxy (
 
   $chain_exists = find_file($chain_path)
   if $use_ssl and !$chain_exists {
-    exec { 'fake_chain':
+    exec { "fake_chain-${stackhead_project_name}":
       command => "ln -s ${stackhead::certificate_dir}/fullchain_snakeoil.pem ${chain_path}",
       unless  => "test -e ${chain_path}",
       creates => $chain_path,
       path    => '/bin',
     }
-    exec { 'fake_key':
+    exec { "fake_key-${stackhead_project_name}":
       command => "ln -s ${stackhead::certificate_dir}/privkey_snakeoil.pem ${privkey_path}",
       unless  => "test -e ${privkey_path}",
       creates => $privkey_path,
