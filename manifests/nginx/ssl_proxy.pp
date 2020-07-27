@@ -5,6 +5,8 @@ define stackhead::nginx::ssl_proxy (
   String  $server_name              = $name,
   Boolean $use_ssl                  = true,
   Enum['present', 'absent'] $ensure = 'present',
+  String $auth_basic                = undef,
+  String $auth_basic_user_file      = undef,
 ) {
   include nginx
 
@@ -30,6 +32,8 @@ define stackhead::nginx::ssl_proxy (
   nginx::resource::server { $name:
     ensure               => $ensure,
     server_name          => [$server_name],
+    auth_basic           => $auth_basic,
+    auth_basic_user_file => $auth_basic_user_file,
     ssl                  => $use_ssl,
     ssl_cert             => $chain_path,
     ssl_key              => $privkey_path,

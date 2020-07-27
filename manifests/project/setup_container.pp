@@ -3,6 +3,7 @@ define stackhead::project::setup_container (
   Array $services,
   Enum['present', 'absent'] $ensure = 'present',
   Boolean $use_ssl = true,
+  String $basicauth_title = 'Restricted area',
 ) {
   ###
   # NGINX
@@ -11,13 +12,21 @@ define stackhead::project::setup_container (
   # Setup Nginx configurations
   $domains.each |Hash $domain| {
     $domain[expose].each |Integer $index, Hash $expose| {
+
+      $auth_basic = 'security' in domain and 'authentication' in domain[security] ? {
+        true => domain[security][authentication].filter |$item| { $item[type] == 'basic' },
+        default => undef
+      }
+
       stackhead::nginx::ssl_proxy { "${domain[domain]}-${expose[external_port]}":
-        project_name => $name,
-        ensure       => $ensure,
-        server_name  => $domain[domain],
-        listen_port  => $expose[external_port],
-        proxy_port   => $expose[internal_port],
-        use_ssl      => $use_ssl,
+        project_name         => $name,
+        ensure               => $ensure,
+        server_name          => $domain[domain],
+        listen_port          => $expose[external_port],
+        proxy_port           => $expose[internal_port],
+        use_ssl              => $use_ssl,
+        auth_basic           => length($auth_basic) > 0 ? { true => $basicauth_title, default => undef},
+        auth_basic_user_file => length($auth_basic) > 0 ? { true => "${stackhead::htpasswd_path}/.${domain[domain]}", default => undef},
       }
     }
   }

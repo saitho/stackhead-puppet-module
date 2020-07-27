@@ -9,6 +9,7 @@ class stackhead (
   String $certificate_email,
   String $acme_dir,
   String $project_certificate_dir,
+  String $htpasswd_path,
 ) {
 
 }
