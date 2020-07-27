@@ -1,4 +1,5 @@
-$ssl_counter = 1;
+$ssl_counter = 1
+
 define stackhead::nginx::ssl_proxy (
   Integer $proxy_port,
   Integer $listen_port = 80,
@@ -23,7 +24,7 @@ define stackhead::nginx::ssl_proxy (
       creates => $privkey_path,
       path    => '/bin',
     }
-    $ssl_counter += 1
+    $ssl_counter = $ssl_counter + 1
   }
 
   # Create Nginx server configuration
