@@ -11,7 +11,6 @@ define stackhead::project::setup_container (
   $domains.each |Hash $domain| {
     $domain[expose].each |Integer $index, Hash $expose| {
       stackhead::nginx::ssl_proxy { "${domain[domain]}-${expose[external_port]}":
-        iteration_counter => $index,
         server_name       => $domain[domain],
         listen_port       => $expose[external_port],
         proxy_port        => $expose[internal_port],

@@ -3,7 +3,6 @@ define stackhead::nginx::ssl_proxy (
   Integer $listen_port       = 80,
   String  $server_name       = $name,
   Boolean $use_ssl           = true,
-  Integer $iteration_counter = 0,
 ) {
   include nginx
 
@@ -13,17 +12,16 @@ define stackhead::nginx::ssl_proxy (
   $privkey_path = "${stackhead::project_certificate_dir}/privkey.pem"
 
   if $use_ssl and (!find_file($chain_path) or !find_file($privkey_path)) {
-    exec { "fake_chain-${iteration_counter}":
+    exec { "fake_chain-${name}":
       command => "ln -s ${stackhead::certificate_dir}/fullchain_snakeoil.pem ${chain_path}",
       creates => $chain_path,
       path    => '/bin',
     }
-    exec { "fake_key-${iteration_counter}":
+    exec { "fake_key-${name}":
       command => "ln -s ${stackhead::certificate_dir}/privkey_snakeoil.pem ${privkey_path}",
       creates => $privkey_path,
       path    => '/bin',
     }
-    $ssl_counter = $ssl_counter + 1
   }
 
   # Create Nginx server configuration
