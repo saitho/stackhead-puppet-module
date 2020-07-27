@@ -15,7 +15,7 @@ define stackhead::project::setup_container (
 
   # Setup Nginx configurations
   $domains.each |Hash $domain| {
-    if (!domain['expose']) {
+    if (!$domain['expose']) {
       next
     }
     $domain['expose'].each |Hash $expose| {
