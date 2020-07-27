@@ -26,6 +26,7 @@ define stackhead::nginx::ssl_proxy (
     }
   }
 
+  $ssl_include = '/etc/nginx/h5bp/ssl/policy_modern.conf'
   # Create Nginx server configuration
   nginx::resource::server { $name:
     ensure               => $ensure,
@@ -35,7 +36,7 @@ define stackhead::nginx::ssl_proxy (
     ssl_key              => $privkey_path,
     ssl_redirect         => $use_ssl,
     location_cfg_prepend => { client_max_body_size => '10G' },
-    include              => $use_ssl ? { false => [], default => ['/etc/nginx/h5bp/ssl/policy_modern.conf'] },
+    include_files        => $use_ssl and find_file($ssl_include) ? { false => [], default => [$ssl_include] },
     proxy                => "http://127.0.0.1:${proxy_port}",
   }
 
