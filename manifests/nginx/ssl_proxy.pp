@@ -37,4 +37,20 @@ define stackhead::nginx::ssl_proxy (
     proxy           => "http://127.0.0.1:${proxy_port}",
   }
 
+  # Redirect for acme
+  nginx::resource::location { "${name}_acme":
+    ensure   => present,
+    server   => $name,
+    location => '/.well-known/acme-challenge',
+    alias    => "${stackhead::acme_dir}/${server_name}"
+  }
+
+
+  #     location /.well-known/acme-challenge {
+  #         alias {{ stackhead__acme_folder }}/{{ nginx_servername }};
+  #
+  #         location ~ /.well-known/acme-challenge/(.*) {
+  #             default_type text/plain;
+  #         }
+  #     }
 }

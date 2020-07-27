@@ -26,21 +26,6 @@ define stackhead::project::setup_container (
     }
   }
 
-  # Create ACME location in Nginx configuration
-  #     location /.well-known/acme-challenge {
-  #         alias {{ stackhead__acme_folder }}/{{ nginx_servername }};
-  #
-  #         location ~ /.well-known/acme-challenge/(.*) {
-  #             default_type text/plain;
-  #         }
-  #     }
-  nginx::resource::location { "${name}_acme":
-    ensure   => present,
-    server   => $domain_names,
-    location => '/.well-known/acme-challenge',
-    alias    => "${stackhead::acme_dir}/${server_name}"
-  }
-
   # Generate real SSL certificates
   $acme_dirs = $domain_names.map |String $domain | {
     "${stackhead::acme_dir}/${domain}"
