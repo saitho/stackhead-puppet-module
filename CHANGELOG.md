@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/getstackhead/puppet-module/compare/v1.4.1...v1.5.0) (2020-07-27)
+
+
+### Features
+
+* **nginx:** add basic auth ([ea31f37](https://github.com/getstackhead/puppet-module/commit/ea31f37b6b6e338aca171d0fb9621c2200ff0d4f))
+
 ## [1.4.1](https://github.com/getstackhead/puppet-module/compare/v1.4.0...v1.4.1) (2020-07-27)
 
 
