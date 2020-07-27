@@ -1,6 +1,7 @@
 define stackhead::project::setup_container (
   Array $domains,
   Array $services,
+  Enum['present', 'absent'] $ensure = 'present',
   Boolean $use_ssl = true,
 ) {
   ###
@@ -11,10 +12,11 @@ define stackhead::project::setup_container (
   $domains.each |Hash $domain| {
     $domain[expose].each |Integer $index, Hash $expose| {
       stackhead::nginx::ssl_proxy { "${domain[domain]}-${expose[external_port]}":
-        server_name       => $domain[domain],
-        listen_port       => $expose[external_port],
-        proxy_port        => $expose[internal_port],
-        use_ssl           => $use_ssl,
+        ensure      => $ensure,
+        server_name => $domain[domain],
+        listen_port => $expose[external_port],
+        proxy_port  => $expose[internal_port],
+        use_ssl     => $use_ssl,
       }
     }
   }
@@ -37,6 +39,7 @@ define stackhead::project::setup_container (
     }
 
     letsencrypt::certonly { "${name}":
+      ensure        => $ensure,
       domains       => $domain_names,
       webroot_paths => $acme_dirs,
       plugin        => 'webroot',

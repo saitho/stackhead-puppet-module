@@ -1,8 +1,9 @@
 define stackhead::nginx::ssl_proxy (
   Integer $proxy_port,
-  Integer $listen_port       = 80,
-  String  $server_name       = $name,
-  Boolean $use_ssl           = true,
+  Integer $listen_port              = 80,
+  String  $server_name              = $name,
+  Boolean $use_ssl                  = true,
+  Enum['present', 'absent'] $ensure = 'present',
 ) {
   include nginx
 
@@ -26,7 +27,7 @@ define stackhead::nginx::ssl_proxy (
 
   # Create Nginx server configuration
   nginx::resource::server { $name:
-    ensure          => present,
+    ensure          => $ensure,
     server_name     => [$server_name],
     ssl             => $use_ssl,
     ssl_cert        => $chain_path,
@@ -36,13 +37,15 @@ define stackhead::nginx::ssl_proxy (
   }
 
   # Redirect for acme
+  $ensure_ssl = 'present'
   if $use_ssl {
-    nginx::resource::location { "${name}_acme":
-      ensure         => present,
-      server         => $name,
-      location       => '/.well-known/acme-challenge',
-      location_alias => "${stackhead::acme_dir}/${server_name}"
-    }
+    $ensure_ssl = 'absent'
+  }
+  nginx::resource::location { "${name}_acme":
+    ensure         => $ensure_ssl,
+    server         => $name,
+    location       => '/.well-known/acme-challenge',
+    location_alias => "${stackhead::acme_dir}/${server_name}"
   }
 
   #     location /.well-known/acme-challenge {
