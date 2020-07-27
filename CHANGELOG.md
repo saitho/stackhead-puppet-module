@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/getstackhead/puppet-module/compare/v1.2.8...v1.2.9) (2020-07-27)
+
+
+### Bug Fixes
+
+* replace $ssl_counter with $iteration_counter ([a797874](https://github.com/getstackhead/puppet-module/commit/a797874c46569656d0f9796f3ecc73e3901ef943))
+
 ## [1.2.8](https://github.com/getstackhead/puppet-module/compare/v1.2.7...v1.2.8) (2020-07-27)
 
 
