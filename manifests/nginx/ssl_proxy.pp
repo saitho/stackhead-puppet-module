@@ -53,24 +53,33 @@ define stackhead::nginx::ssl_proxy (
   nginx::resource::server { $name:
     ensure               => $ensure,
     server_name          => [$server_name],
-    auth_basic           => $basicauth_items.length() > 0 ? { true => $basicauth_title, default => undef},
-    auth_basic_user_file => $auth_basic_user_file,
     ssl                  => $use_ssl,
     ssl_cert             => $chain_path,
     ssl_key              => $privkey_path,
     ssl_redirect         => $use_ssl,
     location_cfg_prepend => { client_max_body_size => '10G' },
-    proxy                => "http://127.0.0.1:${proxy_port}",
   }
 
-  # Redirect for acme
+  # Path for ACME challenges
   nginx::resource::location { "${name}_acme":
     ensure              => $use_ssl ? { false => 'absent', default => 'present' },
     server              => $name,
     index_files         => [],
+    ssl                 => false,
     location            => '/.well-known/acme-challenge',
     location_alias      => "${stackhead::acme_dir}/${project_name}/.well-known/acme-challenge",
     location_cfg_append => { 'default_type' => 'text/plain' }
+  }
+
+  # Proxy to Docker container
+  nginx::resource::location { "${name}_acme":
+    ensure              => $ensure,
+    server              => $name,
+    index_files         => [],
+    ssl                 => true,
+    proxy                => "http://127.0.0.1:${proxy_port}",
+    auth_basic           => $basicauth_items.length() > 0 ? { true => $basicauth_title, default => undef},
+    auth_basic_user_file => $auth_basic_user_file,
   }
 
   #     location /.well-known/acme-challenge {
