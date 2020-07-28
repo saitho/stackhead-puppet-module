@@ -1,3 +1,10 @@
+## [1.7.6](https://github.com/getstackhead/puppet-module/compare/v1.7.5...v1.7.6) (2020-07-28)
+
+
+### Bug Fixes
+
+* **nginx:** adjust container location name ([eda4820](https://github.com/getstackhead/puppet-module/commit/eda4820be4eaebeb2d52616134e45154b10d2e7d))
+
 ## [1.7.5](https://github.com/getstackhead/puppet-module/compare/v1.7.4...v1.7.5) (2020-07-28)
 
 
