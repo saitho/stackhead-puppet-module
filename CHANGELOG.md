@@ -1,3 +1,10 @@
+## [1.7.8](https://github.com/getstackhead/puppet-module/compare/v1.7.7...v1.7.8) (2020-07-28)
+
+
+### Bug Fixes
+
+* **nginx:** fix ssl settings ([7751a22](https://github.com/getstackhead/puppet-module/commit/7751a22cadb510bd8a26531545d6ded60dd97330))
+
 ## [1.7.7](https://github.com/getstackhead/puppet-module/compare/v1.7.6...v1.7.7) (2020-07-28)
 
 
