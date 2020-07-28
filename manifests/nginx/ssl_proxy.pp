@@ -29,15 +29,14 @@ define stackhead::nginx::ssl_proxy (
   }
 
   $basicauth_items = $auth.filter |Hash $item| { $item['type'] == 'basic' }
-  $auth_basic_user_file = $basicauth_items.length() > 0 ? { true => "${stackhead::htpasswd_path}/.${domain[domain]}", default => undef}
+  $auth_basic_user_file = "${stackhead::htpasswd_path}/.${domain[domain]}"
 
   # Remove file to make sure it is recreated from scratch
-  file { "${name}-basicauth":
-    path => $auth_basic_user_file,
+  file { $auth_basic_user_file:
     ensure => 'absent'
   }
   # Create basic auth user file
-  if $auth_basic_user_file != undef {
+  if $basicauth_items.length() > 0 {
     concat { $auth_basic_user_file:
       ensure => $auth_basic_user_file != undef ? { true => 'present', default => 'absent' },
     }
