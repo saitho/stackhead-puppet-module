@@ -17,17 +17,16 @@ define stackhead::project::setup_container (
         true => domain[security][authentication],
         default => []
       }
-      $basicauth_items = $items.filter |Hash $item| { $item['type'] == 'basic' }
 
       stackhead::nginx::ssl_proxy { "${domain[domain]}-${expose[external_port]}":
-        project_name         => $name,
-        ensure               => $ensure,
-        server_name          => $domain[domain],
-        listen_port          => $expose[external_port],
-        proxy_port           => $expose[internal_port],
-        use_ssl              => $use_ssl,
-        auth_basic           => $basicauth_items.length() > 0 ? { true => $basicauth_title, default => undef},
-        auth_basic_user_file => $basicauth_items.length() > 0 ? { true => "${stackhead::htpasswd_path}/.${domain[domain]}", default => undef},
+        project_name    => $name,
+        ensure          => $ensure,
+        server_name     => $domain[domain],
+        listen_port     => $expose[external_port],
+        proxy_port      => $expose[internal_port],
+        use_ssl         => $use_ssl,
+        auth            => $items,
+        basicauth_title => $basicauth_title,
       }
     }
   }

@@ -5,8 +5,8 @@ define stackhead::nginx::ssl_proxy (
   String  $server_name              = $name,
   Boolean $use_ssl                  = true,
   Enum['present', 'absent'] $ensure = 'present',
-  $auth_basic                       = undef,
-  $auth_basic_user_file             = undef,
+  Array $auth                       = [],
+  String $basicauth_title,
 ) {
   include nginx
 
@@ -28,11 +28,33 @@ define stackhead::nginx::ssl_proxy (
     }
   }
 
+  $basicauth_items = $auth.filter |Hash $item| { $item['type'] == 'basic' }
+  $auth_basic_user_file = $basicauth_items.length() > 0 ? { true => "${stackhead::htpasswd_path}/.${domain[domain]}", default => undef}
+
+  # Remove file to make sure it is recreated from scratch
+  file { "${name}-basicauth":
+    path => $auth_basic_user_file,
+    ensure => 'absent'
+  }
+  # Create basic auth user file
+  if $auth_basic_user_file != undef {
+    concat { $auth_basic_user_file:
+      ensure => $auth_basic_user_file != undef ? { true => 'present', default => 'absent' },
+    }
+
+    $basicauth_items.each |Hash $auth| {
+      concat::fragment { "${auth_basic_user_file}-user-${auth[username]}":
+        target  => $auth_basic_user_file,
+        content => "${auth[username]}:${pw_hash(auth[password], 'SHA-512', 'salt')}"
+      }
+    }
+  }
+
   # Create Nginx server configuration
   nginx::resource::server { $name:
     ensure               => $ensure,
     server_name          => [$server_name],
-    auth_basic           => $auth_basic,
+    auth_basic           => $basicauth_items.length() > 0 ? { true => $basicauth_title, default => undef},
     auth_basic_user_file => $auth_basic_user_file,
     ssl                  => $use_ssl,
     ssl_cert             => $chain_path,
