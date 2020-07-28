@@ -39,14 +39,14 @@ define stackhead::nginx::ssl_proxy (
   if $basicauth_items.length() > 0 {
     concat { $auth_basic_user_file:
       ensure  => $auth_basic_user_file != undef ? { true => 'present', default => 'absent' },
-      require => file[$auth_basic_user_file],
+      require => File[$auth_basic_user_file],
     }
 
     $basicauth_items.each |Hash $auth| {
       concat::fragment { "${auth_basic_user_file}-user-${auth[username]}":
         target  => $auth_basic_user_file,
         content => "${auth[username]}:${pw_hash(auth[password], 'SHA-512', 'salt')}",
-        require => concat[$auth_basic_user_file],
+        require => Class['concat'],
       }
     }
   }
@@ -61,7 +61,7 @@ define stackhead::nginx::ssl_proxy (
     ssl_redirect         => $use_ssl,
     location_cfg_prepend => { client_max_body_size => '10G' },
     use_default_location => false,
-    require              => file[$auth_basic_user_file],
+    require              => File[$auth_basic_user_file],
   }
 
   # Path for ACME challenges
@@ -73,7 +73,7 @@ define stackhead::nginx::ssl_proxy (
     location            => '/.well-known/acme-challenge',
     location_alias      => "${stackhead::acme_dir}/${project_name}/.well-known/acme-challenge",
     location_cfg_append => { 'default_type' => 'text/plain' },
-    require             => nginx::resource::server[$name],
+    require             => Class['nginx::resource::server'],
   }
 
   # Proxy to Docker container
@@ -87,6 +87,6 @@ define stackhead::nginx::ssl_proxy (
     proxy                => "http://127.0.0.1:${proxy_port}",
     auth_basic           => $basicauth_items.length() > 0 ? { true => $basicauth_title, default => undef},
     auth_basic_user_file => $auth_basic_user_file,
-    require              => nginx::resource::server[$name],
+    require              => Class['nginx::resource::server'],
   }
 }
