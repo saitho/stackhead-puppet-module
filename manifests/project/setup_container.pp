@@ -55,5 +55,17 @@ define stackhead::project::setup_container (
       webroot_paths => ["${stackhead::acme_dir}/${name}"],
       plugin        => 'webroot',
     }
+
+    # Update symlink
+    if $use_ssl {
+      exec { "real_chain-${name}":
+        command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/fullchain_snakeoil.pem ${chain_path}",
+        path    => '/bin',
+      }
+      exec { "real_key-${name}":
+        command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/privkey_snakeoil.pem ${privkey_path}",
+        path    => '/bin',
+      }
+    }
   }
 }
