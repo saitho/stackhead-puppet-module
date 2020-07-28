@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/getstackhead/puppet-module/compare/v1.7.3...v1.7.4) (2020-07-28)
+
+
+### Bug Fixes
+
+* **nginx/ssl:** path to real certificates ([883ff4c](https://github.com/getstackhead/puppet-module/commit/883ff4c74247c9fe9302260aa4f0bf427d1da0cb))
+
 ## [1.7.3](https://github.com/getstackhead/puppet-module/compare/v1.7.2...v1.7.3) (2020-07-28)
 
 
