@@ -1,3 +1,10 @@
+## [1.7.10](https://github.com/getstackhead/puppet-module/compare/v1.7.9...v1.7.10) (2020-07-28)
+
+
+### Bug Fixes
+
+* try setting execution order ([f562206](https://github.com/getstackhead/puppet-module/commit/f56220651fad3223685e59d4a95eb45eb15376f7))
+
 ## [1.7.9](https://github.com/getstackhead/puppet-module/compare/v1.7.8...v1.7.9) (2020-07-28)
 
 
