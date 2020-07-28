@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/getstackhead/puppet-module/compare/v1.7.1...v1.7.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **nginx/basicauth:** illegal array access ([ae2c277](https://github.com/getstackhead/puppet-module/commit/ae2c2777677770599376448d3da897efbd0aa997))
+
 ## [1.7.1](https://github.com/getstackhead/puppet-module/compare/v1.7.0...v1.7.1) (2020-07-28)
 
 
