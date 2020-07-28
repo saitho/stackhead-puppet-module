@@ -1,12 +1,12 @@
 define stackhead::nginx::ssl_proxy (
   String $project_name,
   Integer $proxy_port,
+  String  $server_name,
+  String $basicauth_title,
   Integer $listen_port              = 80,
-  String  $server_name              = $name,
   Boolean $use_ssl                  = true,
   Enum['present', 'absent'] $ensure = 'present',
   Array $auth                       = [],
-  String $basicauth_title,
 ) {
   include nginx
 
@@ -29,7 +29,7 @@ define stackhead::nginx::ssl_proxy (
   }
 
   $basicauth_items = $auth.filter |Hash $item| { $item['type'] == 'basic' }
-  $auth_basic_user_file = "${stackhead::htpasswd_path}/.${domain[domain]}"
+  $auth_basic_user_file = "${stackhead::htpasswd_path}/.${server_name}"
 
   # Remove file to make sure it is recreated from scratch
   file { $auth_basic_user_file:
