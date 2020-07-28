@@ -39,7 +39,10 @@ define stackhead::project::setup_container (
     class { 'letsencrypt':
       config => {
         email  => $stackhead::certificate_email,
-        server => 'https://acme-v02.api.letsencrypt.org/directory',
+        server => $stackhead::test ? {
+          true => 'https://acme-staging-v02.api.letsencrypt.org/directory',
+          default => 'https://acme-v02.api.letsencrypt.org/directory'
+        },
       },
       renew_cron_ensure => 'present',
     }
