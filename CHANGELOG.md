@@ -1,3 +1,10 @@
+## [1.7.5](https://github.com/getstackhead/puppet-module/compare/v1.7.4...v1.7.5) (2020-07-28)
+
+
+### Bug Fixes
+
+* **nginx/basicauth:** add basic auth only to Docker proxy ([5c52e1f](https://github.com/getstackhead/puppet-module/commit/5c52e1f5798247d81dbd0e76bfeb18dc07975b4e))
+
 ## [1.7.4](https://github.com/getstackhead/puppet-module/compare/v1.7.3...v1.7.4) (2020-07-28)
 
 
