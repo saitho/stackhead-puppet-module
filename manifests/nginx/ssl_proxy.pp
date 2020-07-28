@@ -73,20 +73,14 @@ define stackhead::nginx::ssl_proxy (
 
   # Proxy to Docker container
   nginx::resource::location { "${name}_container":
-    ensure              => $ensure,
-    server              => $name,
-    index_files         => [],
-    ssl                 => true,
+    ensure               => $ensure,
+    server               => $name,
+    index_files          => [],
+    ssl                  => true,
+    ssl_only             => true,
+    location            => '/',
     proxy                => "http://127.0.0.1:${proxy_port}",
     auth_basic           => $basicauth_items.length() > 0 ? { true => $basicauth_title, default => undef},
     auth_basic_user_file => $auth_basic_user_file,
   }
-
-  #     location /.well-known/acme-challenge {
-  #         alias {{ stackhead__acme_folder }}/{{ nginx_servername }};
-  #
-  #         location ~ /.well-known/acme-challenge/(.*) {
-  #             default_type text/plain;
-  #         }
-  #     }
 }
