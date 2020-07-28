@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/getstackhead/puppet-module/compare/v1.5.2...v1.6.0) (2020-07-28)
+
+
+### Features
+
+* add test setting ([dc4cba9](https://github.com/getstackhead/puppet-module/commit/dc4cba9a3689090886828345460139c47d8fcbdb))
+
 ## [1.5.2](https://github.com/getstackhead/puppet-module/compare/v1.5.1...v1.5.2) (2020-07-28)
 
 
