@@ -72,7 +72,7 @@ define stackhead::nginx::ssl_proxy (
   }
 
   # Proxy to Docker container
-  nginx::resource::location { "${name}_acme":
+  nginx::resource::location { "${name}_container":
     ensure              => $ensure,
     server              => $name,
     index_files         => [],
