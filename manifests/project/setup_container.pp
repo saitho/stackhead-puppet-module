@@ -60,11 +60,11 @@ define stackhead::project::setup_container (
     $privkey_path = "${stackhead::project_certificate_dir}/privkey.pem"
     if $use_ssl {
       exec { "real_chain-${name}":
-        command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/fullchain_snakeoil.pem ${chain_path}",
+        command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/fullchain.pem ${chain_path}",
         path    => '/bin',
       }
       exec { "real_key-${name}":
-        command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/privkey_snakeoil.pem ${privkey_path}",
+        command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/privkey.pem ${privkey_path}",
         path    => '/bin',
       }
     }
