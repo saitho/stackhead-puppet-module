@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/getstackhead/puppet-module/compare/v1.5.1...v1.5.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* **nginx/cert:** adjust acme challenge path ([9bb9b70](https://github.com/getstackhead/puppet-module/commit/9bb9b7037e4706bbb531acfb3d833f315bf214fb))
+
 ## [1.5.1](https://github.com/getstackhead/puppet-module/compare/v1.5.0...v1.5.1) (2020-07-27)
 
 
