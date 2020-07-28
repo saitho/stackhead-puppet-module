@@ -62,12 +62,10 @@ define stackhead::project::setup_container (
       exec { "real_chain-${name}":
         command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/fullchain.pem ${chain_path}",
         path    => '/bin',
-        require => Class['letsencrypt::certonly'],
       }
       exec { "real_key-${name}":
         command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/privkey.pem ${privkey_path}",
         path    => '/bin',
-        require => Class['letsencrypt::certonly'],
       }
     }
   }
