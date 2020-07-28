@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/getstackhead/puppet-module/compare/v1.6.0...v1.7.0) (2020-07-28)
+
+
+### Features
+
+* create basic auth file ([c1fefab](https://github.com/getstackhead/puppet-module/commit/c1fefab34656a9ea2f35ac1f51f0a169d289dbe3))
+* updates symlink after certificates have been created ([0cb3726](https://github.com/getstackhead/puppet-module/commit/0cb3726b3a8ce2076e072ae438c5fccfecd0ea1b))
+
 # [1.6.0](https://github.com/getstackhead/puppet-module/compare/v1.5.2...v1.6.0) (2020-07-28)
 
 
