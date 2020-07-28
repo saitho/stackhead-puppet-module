@@ -53,7 +53,6 @@ define stackhead::project::setup_container (
       domains       => $domain_names,
       webroot_paths => ["${stackhead::acme_dir}/${name}"],
       plugin        => 'webroot',
-      require       => stackhead::nginx::ssl_proxy["${domain[domain]}-${expose[external_port]}"],
     }
 
     # Update symlink
