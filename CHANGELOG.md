@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/getstackhead/puppet-module/compare/v1.7.0...v1.7.1) (2020-07-28)
+
+
+### Bug Fixes
+
+* basic auth file definition ([9d2d2be](https://github.com/getstackhead/puppet-module/commit/9d2d2be1fe28d93a6adb54082d14d1fb7473cd45))
+
 # [1.7.0](https://github.com/getstackhead/puppet-module/compare/v1.6.0...v1.7.0) (2020-07-28)
 
 
