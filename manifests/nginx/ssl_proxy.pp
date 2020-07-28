@@ -53,6 +53,7 @@ define stackhead::nginx::ssl_proxy (
   nginx::resource::server { $name:
     ensure               => $ensure,
     server_name          => [$server_name],
+    ssl                  => $use_ssl,
     ssl_cert             => $chain_path,
     ssl_key              => $privkey_path,
     ssl_redirect         => $use_ssl,
