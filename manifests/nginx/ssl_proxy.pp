@@ -5,8 +5,8 @@ define stackhead::nginx::ssl_proxy (
   String  $server_name              = $name,
   Boolean $use_ssl                  = true,
   Enum['present', 'absent'] $ensure = 'present',
-  String $auth_basic                = undef,
-  String $auth_basic_user_file      = undef,
+  $auth_basic                       = undef,
+  $auth_basic_user_file             = undef,
 ) {
   include nginx
 
@@ -48,7 +48,7 @@ define stackhead::nginx::ssl_proxy (
     server              => $name,
     index_files         => [],
     location            => '/.well-known/acme-challenge',
-    location_alias      => "${stackhead::acme_dir}/${project_name}",
+    location_alias      => "${stackhead::acme_dir}/${project_name}/.well-known/acme-challenge",
     location_cfg_append => { 'default_type' => 'text/plain' }
   }
 

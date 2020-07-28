@@ -13,11 +13,11 @@ define stackhead::project::setup_container (
   $domains.each |Hash $domain| {
     $domain[expose].each |Integer $index, Hash $expose| {
 
-      $items = 'security' in domain and 'authentication' in domain[security] ? {
+      $items = ('security' in domain and 'authentication' in domain[security]) ? {
         true => domain[security][authentication],
         default => []
       }
-      $basicauth_items = $items.filter |$item| { $item[type] == 'basic' }
+      $basicauth_items = $items.filter |Hash $item| { $item['type'] == 'basic' }
 
       stackhead::nginx::ssl_proxy { "${domain[domain]}-${expose[external_port]}":
         project_name         => $name,
