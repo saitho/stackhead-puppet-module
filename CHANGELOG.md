@@ -1,3 +1,10 @@
+## [1.7.13](https://github.com/getstackhead/puppet-module/compare/v1.7.12...v1.7.13) (2020-07-28)
+
+
+### Bug Fixes
+
+* remove Class require ([db8eed7](https://github.com/getstackhead/puppet-module/commit/db8eed7fb51c679655160437dd2a1516d4bb7895))
+
 ## [1.7.12](https://github.com/getstackhead/puppet-module/compare/v1.7.11...v1.7.12) (2020-07-28)
 
 
