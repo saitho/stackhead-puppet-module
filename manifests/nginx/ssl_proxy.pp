@@ -53,11 +53,11 @@ define stackhead::nginx::ssl_proxy (
   nginx::resource::server { $name:
     ensure               => $ensure,
     server_name          => [$server_name],
-    ssl                  => $use_ssl,
     ssl_cert             => $chain_path,
     ssl_key              => $privkey_path,
     ssl_redirect         => $use_ssl,
     location_cfg_prepend => { client_max_body_size => '10G' },
+    use_default_location => false
   }
 
   # Path for ACME challenges
@@ -76,8 +76,8 @@ define stackhead::nginx::ssl_proxy (
     ensure               => $ensure,
     server               => $name,
     index_files          => [],
-    ssl                  => true,
-    ssl_only             => true,
+    ssl                  => $use_ssl,
+    ssl_only             => $use_ssl,
     location            => '/',
     proxy                => "http://127.0.0.1:${proxy_port}",
     auth_basic           => $basicauth_items.length() > 0 ? { true => $basicauth_title, default => undef},
