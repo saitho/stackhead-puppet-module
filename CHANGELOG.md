@@ -1,3 +1,10 @@
+## [1.7.12](https://github.com/getstackhead/puppet-module/compare/v1.7.11...v1.7.12) (2020-07-28)
+
+
+### Bug Fixes
+
+* adjust require ([d3bd870](https://github.com/getstackhead/puppet-module/commit/d3bd8704a5f575cf50bdd209cc9f2cdeff6cf1a5))
+
 ## [1.7.11](https://github.com/getstackhead/puppet-module/compare/v1.7.10...v1.7.11) (2020-07-28)
 
 
