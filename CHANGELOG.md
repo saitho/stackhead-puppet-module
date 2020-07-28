@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/getstackhead/puppet-module/compare/v1.7.2...v1.7.3) (2020-07-28)
+
+
+### Bug Fixes
+
+* **nginx/basicauth:** htaccess and certificate paths ([a8ec984](https://github.com/getstackhead/puppet-module/commit/a8ec984d85e65bab088a3ddad54030ec42ada997))
+
 ## [1.7.2](https://github.com/getstackhead/puppet-module/compare/v1.7.1...v1.7.2) (2020-07-28)
 
 
