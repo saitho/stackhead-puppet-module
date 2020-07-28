@@ -56,6 +56,8 @@ define stackhead::project::setup_container (
     }
 
     # Update symlink
+    $chain_path = "${stackhead::project_certificate_dir}/fullchain.pem"
+    $privkey_path = "${stackhead::project_certificate_dir}/privkey.pem"
     if $use_ssl {
       exec { "real_chain-${name}":
         command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/fullchain_snakeoil.pem ${chain_path}",

@@ -29,7 +29,7 @@ define stackhead::nginx::ssl_proxy (
   }
 
   $basicauth_items = $auth.filter |Hash $item| { $item['type'] == 'basic' }
-  $auth_basic_user_file = "${stackhead::htpasswd_path}/.${server_name}"
+  $auth_basic_user_file = "${stackhead::htpasswd_path}/.${server_name}-${listen_port}"
 
   # Remove file to make sure it is recreated from scratch
   file { $auth_basic_user_file:
