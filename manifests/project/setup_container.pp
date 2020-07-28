@@ -48,11 +48,12 @@ define stackhead::project::setup_container (
 
     $domain_names = $domains.map |$item| { $item[domain] }
 
-    letsencrypt::certonly { "${name}":
+    letsencrypt::certonly { $name:
       ensure        => $ensure,
       domains       => $domain_names,
       webroot_paths => ["${stackhead::acme_dir}/${name}"],
       plugin        => 'webroot',
+      require       => stackhead::nginx::ssl_proxy["${domain[domain]}-${expose[external_port]}"],
     }
 
     # Update symlink
@@ -62,10 +63,12 @@ define stackhead::project::setup_container (
       exec { "real_chain-${name}":
         command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/fullchain.pem ${chain_path}",
         path    => '/bin',
+        require => letsencrypt::certonly[$name],
       }
       exec { "real_key-${name}":
         command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/privkey.pem ${privkey_path}",
         path    => '/bin',
+        require => letsencrypt::certonly[$name],
       }
     }
   }
