@@ -32,10 +32,12 @@ define stackhead::nginx::proxy (
   $basicauth_items = $auth.filter |Hash $item| { $item['type'] == 'basic' }
   $auth_basic_user_file = "${stackhead::htpasswd_path}/.${server_name}-${listen_port}"
 
-  # Remove file to make sure it is recreated from scratch
-  file { $auth_basic_user_file:
-    ensure => 'absent'
+  if $basicauth_items.length() == 0 {
+    file { $auth_basic_user_file:
+      ensure => 'absent'
+    }
   }
+
   # Create basic auth user file
   notice("BasicAuth items found: ${basicauth_items.length()} for project '${project_name}'")
   if $basicauth_items.length() > 0 {
@@ -62,7 +64,6 @@ define stackhead::nginx::proxy (
     ssl_redirect         => $use_ssl,
     location_cfg_prepend => { client_max_body_size => '10G' },
     use_default_location => false,
-    require              => File[$auth_basic_user_file],
   }
 
   # Path for ACME challenges
