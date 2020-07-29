@@ -1,4 +1,4 @@
-define stackhead::nginx::ssl_proxy (
+define stackhead::nginx::proxy (
   String $project_name,
   Integer $proxy_port,
   String  $server_name,
@@ -42,13 +42,12 @@ define stackhead::nginx::ssl_proxy (
     notice("Creating basic auth file for project '${project_name}'")
     concat { $auth_basic_user_file:
       ensure  => $auth_basic_user_file != undef ? { true => 'present', default => 'absent' },
-      require => File[$auth_basic_user_file],
     }
 
     $basicauth_items.each |Hash $auth| {
       concat::fragment { "${auth_basic_user_file}-user-${auth[username]}":
         target  => $auth_basic_user_file,
-        content => "${auth[username]}:${pw_hash(auth[password], 'SHA-512', 'salt')}",
+        content => "${auth[username]}:${pw_hash($auth[password], 'SHA-512', 'salt')}",
       }
     }
   }
@@ -89,6 +88,6 @@ define stackhead::nginx::ssl_proxy (
     location             => '/',
     proxy                => "http://127.0.0.1:${proxy_port}",
     auth_basic           => $basicauth_items.length() > 0 ? { true => $basicauth_title, default => undef},
-    auth_basic_user_file => $auth_basic_user_file,
+    auth_basic_user_file => $basicauth_items.length() > 0 ? { true => $auth_basic_user_file, default => undef},
   }
 }
