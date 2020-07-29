@@ -1,3 +1,10 @@
+## [1.7.14](https://github.com/getstackhead/puppet-module/compare/v1.7.13...v1.7.14) (2020-07-29)
+
+
+### Bug Fixes
+
+* add notices for easier debugging ([112c034](https://github.com/getstackhead/puppet-module/commit/112c03453eb074acc08d7dc6cbbcf61952f747a8))
+
 ## [1.7.13](https://github.com/getstackhead/puppet-module/compare/v1.7.12...v1.7.13) (2020-07-28)
 
 
