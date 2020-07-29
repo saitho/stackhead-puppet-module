@@ -16,6 +16,7 @@ define stackhead::nginx::ssl_proxy (
   $privkey_path = "${stackhead::project_certificate_dir}/privkey.pem"
 
   if $use_ssl and (!find_file($chain_path) or !find_file($privkey_path)) {
+    notice("Creating fake certificates for project '${project_name}'")
     exec { "fake_chain-${name}":
       command => "ln -sf ${stackhead::certificate_dir}/fullchain_snakeoil.pem ${chain_path}",
       creates => $chain_path,
@@ -36,7 +37,9 @@ define stackhead::nginx::ssl_proxy (
     ensure => 'absent'
   }
   # Create basic auth user file
+  notice("BasicAuth items found: ${basicauth_items.length()} for project '${project_name}'")
   if $basicauth_items.length() > 0 {
+    notice("Creating basic auth file for project '${project_name}'")
     concat { $auth_basic_user_file:
       ensure  => $auth_basic_user_file != undef ? { true => 'present', default => 'absent' },
       require => File[$auth_basic_user_file],
@@ -64,6 +67,7 @@ define stackhead::nginx::ssl_proxy (
   }
 
   # Path for ACME challenges
+  notice("ACME challenges Nginx location for project '${project_name}': ${use_ssl}")
   nginx::resource::location { "${name}_acme":
     ensure              => $use_ssl ? { false => 'absent', default => 'present' },
     server              => $name,
@@ -75,6 +79,7 @@ define stackhead::nginx::ssl_proxy (
   }
 
   # Proxy to Docker container
+  notice("Container proxy Nginx location for project '${project_name}'")
   nginx::resource::location { "${name}_container":
     ensure               => $ensure,
     server               => $name,

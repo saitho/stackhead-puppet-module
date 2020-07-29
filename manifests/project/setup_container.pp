@@ -13,11 +13,12 @@ define stackhead::project::setup_container (
   $domains.each |Hash $domain| {
     $domain[expose].each |Integer $index, Hash $expose| {
 
-      $items = ('security' in domain and 'authentication' in domain[security]) ? {
+      $auth = ('security' in domain and 'authentication' in domain[security]) ? {
         true => domain[security][authentication],
         default => []
       }
 
+      notice("Setting up Nginx for domain '${domain[domain]}' with port '${expose[external_port]}' on project '${name}'")
       stackhead::nginx::ssl_proxy { "${domain[domain]}-${expose[external_port]}":
         project_name    => $name,
         ensure          => $ensure,
@@ -25,7 +26,7 @@ define stackhead::project::setup_container (
         listen_port     => $expose[external_port],
         proxy_port      => $expose[internal_port],
         use_ssl         => $use_ssl,
-        auth            => $items,
+        auth            => $auth,
         basicauth_title => $basicauth_title,
       }
     }
@@ -48,25 +49,18 @@ define stackhead::project::setup_container (
 
     $domain_names = $domains.map |$item| { $item[domain] }
 
-    letsencrypt::certonly { $name:
-      ensure        => $ensure,
-      domains       => $domain_names,
-      webroot_paths => ["${stackhead::acme_dir}/${name}"],
-      plugin        => 'webroot',
-    }
-
-    # Update symlink
     $chain_path = "${stackhead::project_certificate_dir}/fullchain.pem"
     $privkey_path = "${stackhead::project_certificate_dir}/privkey.pem"
-    if $use_ssl {
-      exec { "real_chain-${name}":
-        command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/fullchain.pem ${chain_path}",
-        path    => '/bin',
-      }
-      exec { "real_key-${name}":
-        command => "ln -sf ${stackhead::letsencrypt_certificate_dir}/privkey.pem ${privkey_path}",
-        path    => '/bin',
-      }
+    notice("Setting up SSL certificate for domains '${join($domain_names, ",")}' on project '${name}'")
+    letsencrypt::certonly { $name:
+      ensure               => $ensure,
+      domains              => $domain_names,
+      webroot_paths        => ["${stackhead::acme_dir}/${name}"],
+      plugin               => 'webroot',
+      deploy_hook_commands => [
+        "ln -sf ${stackhead::letsencrypt_certificate_dir}/fullchain.pem ${chain_path}",
+        "ln -sf ${stackhead::letsencrypt_certificate_dir}/privkey.pem ${privkey_path}"
+      ]
     }
   }
 }
