@@ -1,3 +1,10 @@
+## [1.7.16](https://github.com/getstackhead/puppet-module/compare/v1.7.15...v1.7.16) (2020-07-29)
+
+
+### Bug Fixes
+
+* basicauth newlines and variables ([612e289](https://github.com/getstackhead/puppet-module/commit/612e28948acf922e77697ebcee47dafa49c7438a))
+
 ## [1.7.15](https://github.com/getstackhead/puppet-module/compare/v1.7.14...v1.7.15) (2020-07-29)
 
 
