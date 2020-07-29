@@ -32,20 +32,15 @@ define stackhead::nginx::proxy (
   $basicauth_items = $auth.filter |Hash $item| { $item['type'] == 'basic' }
   $auth_basic_user_file = "${stackhead::htpasswd_path}/.${server_name}-${listen_port}"
 
-  if $basicauth_items.length() == 0 {
-    file { $auth_basic_user_file:
-      ensure => 'absent'
-    }
-  }
 
   # Create basic auth user file
   notice("BasicAuth items found: ${basicauth_items.length()} for project '${project_name}'")
+  concat { $auth_basic_user_file:
+    ensure         => $basicauth_items.length() > 0 ? { true => 'present', default => 'absent' },
+    ensure_newline => true
+  }
   if $basicauth_items.length() > 0 {
     notice("Creating basic auth file for project '${project_name}'")
-    concat { $auth_basic_user_file:
-      ensure  => $auth_basic_user_file != undef ? { true => 'present', default => 'absent' },
-    }
-
     $basicauth_items.each |Hash $auth| {
       concat::fragment { "${auth_basic_user_file}-user-${auth[username]}":
         target  => $auth_basic_user_file,

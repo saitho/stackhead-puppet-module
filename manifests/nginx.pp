@@ -7,8 +7,8 @@ define stackhead::nginx (
 ) {
   $domains.each |Hash $domain| {
     $domain[expose].each |Integer $index, Hash $expose| {
-      $auth = ('security' in domain and 'authentication' in domain[security]) ? {
-        true => domain[security][authentication],
+      $auth = ('security' in $domain and 'authentication' in $domain[security]) ? {
+        true => $domain[security][authentication],
         default => []
       }
 
