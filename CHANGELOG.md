@@ -1,3 +1,10 @@
+## [1.7.15](https://github.com/getstackhead/puppet-module/compare/v1.7.14...v1.7.15) (2020-07-29)
+
+
+### Bug Fixes
+
+* remove auth file when list is empty ([d5759ff](https://github.com/getstackhead/puppet-module/commit/d5759ff791160c7ce3626ee7ae05a6f0833d2ebc))
+
 ## [1.7.14](https://github.com/getstackhead/puppet-module/compare/v1.7.13...v1.7.14) (2020-07-29)
 
 
